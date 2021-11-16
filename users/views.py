@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -40,3 +41,16 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+def user_detail(request, pk):
+    userobj = User.objects.get(id=pk)
+    profile = userobj.profile
+    posts = userobj.post_set.filter(public=True)
+    if request.user.id == pk:
+        posts = userobj.post_set.all()
+
+    context = {
+        'profile' : profile,
+        'posts' : posts
+    }
+    return render(request, 'users/user_detail.html', context)

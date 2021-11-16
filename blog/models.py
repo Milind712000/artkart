@@ -6,9 +6,13 @@ from django.urls import reverse
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    content = models.TextField()
+    image = models.ImageField(default='default.jpg', upload_to='art')
+    description = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    public = models.BooleanField(default=False)
+    price = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
+    # TODO: add category tagging
 
     def __str__(self):
         return self.title
