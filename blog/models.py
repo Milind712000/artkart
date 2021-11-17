@@ -19,3 +19,20 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+# class corder(models.Model):
+#     # init
+#     buyer_id = models.ForeignKey(User)
+#     seller_id = models.ForeignKey(User)
+
+#     # buyer
+#     price = models.DecimalField(max_digits=7, decimal_places=2)
+#     description = models.TextField()
+#     step1 = models.BooleanField(default=False)
+
+#     # seller
+#     preview_img = models.ImageField(default='none.jpg', upload_to='order_imgs')
+#     final_img = models.ImageField(default='none.jpg', upload_to='order_imgs')
+
+#     # buyer
+#     step2 = models.BooleanField(default=False)

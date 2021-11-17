@@ -53,4 +53,4 @@ def user_detail(request, pk):
         'profile' : profile,
         'posts' : posts
     }
-    return render(request, 'users/user_detail.html', context)
+    return render(request, 'users/user_info.html', context)

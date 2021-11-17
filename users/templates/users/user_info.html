@@ -1,22 +1,28 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row py-3">
-
-        <div class="col-3" id="sticky-sidebar">
-            <div class="sticky-top">
-                <h3>Filters</h3>
-                <div class="nav flex-column">
-                    <a href="#_" class="nav-link">Nature</a>
-                    <a href="#_" class="nav-link">Animals</a>
-                    <a href="#_" class="nav-link">Portraiture</a>
-                    <a href="#_" class="nav-link">Realistic</a>
+<div class="container">
+    <div class="card mt-3 mb-3 pt-3 pb-3">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img src="{{ profile.image.url }}" class="rounded">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ profile.user.username }}</h5>
+                    <p class="card-text">{{ profile.description }}</p>
+                    <button type="button" class="btn btn-success">Message</button>
+                    <button type="button" class="btn btn-primary">Commission custom art</button>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row py-3">
         <div class="col" id="main">
             <div class="row row-cols-3">
-
                 {% for post in posts %}
                 <div class="col mb-3">
                     <div class="card">
@@ -32,7 +38,6 @@
                     </div>
                 </div>
                 {% endfor %}
-
             </div>
         </div>
     </div>
