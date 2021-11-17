@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields.files import ImageField
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -24,6 +25,15 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+class Purchases(models.Model):
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller')
+    
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    full_image = models.ImageField(default='default.jpg', upload_to='art')
+    category = models.CharField(max_length=20, choices=category_list, default=category_list[-1][0])
 
 # class corder(models.Model):
 #     # init

@@ -22,7 +22,7 @@
 
           <p class="card-text">{{ object.description }}</p>
 
-          <button type="button" class="btn btn-success">Buy &#8377; {{ object.price }}</button>
+          <a href="{% url 'item-buy' object.id %}" class="btn btn-success">Buy &#8377; {{ object.price }}</a>
         </div>
       </div>
     </div>

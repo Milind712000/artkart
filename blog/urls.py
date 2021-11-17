@@ -14,4 +14,6 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    path('item/<int:pk>/buy/', views.buy_page, name='item-buy'),
+    path('item/mine', views.my_items, name='items-bought'),
 ]

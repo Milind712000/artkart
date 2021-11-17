@@ -27,7 +27,7 @@
                                 <a class="mr-2" href="{% url 'user-profile' post.author.id %}">{{ post.author }}</a>
                                 <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
                             </p>
-                            <a href="#" class="btn btn-primary">Buy &#8377; {{post.price}} </a>
+                            <a href="{% url 'item-buy' post.id %}" class="btn btn-success">Buy &#8377; {{ post.price }}</a>
                         </div>
                     </div>
                 </div>

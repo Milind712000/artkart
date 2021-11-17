@@ -1,0 +1,35 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="container">
+	<div class="card mt-3 mb-3 pt-3 pb-3">
+		<div class="row no-gutters">
+			<div class="col-md-4">
+				<div class="text-center">
+					<img src="{{ post.preview_image.url }}" class="rounded">
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">{{ post.title }}</h5>
+					<a class="mr-2" href="{% url 'user-profile' post.author.id %}">{{ post.author }}</a>
+					<small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+
+					<p class="card-text">{{ post.description }}</p>
+
+					<form method="POST">
+						{% csrf_token %}
+						<fieldset class="form-group">
+							<legend class="border-bottom mb-4">Make Payment</legend>
+							<h2>Are you sure you want to make the payment</h2>
+						</fieldset>
+						<div class="form-group">
+							<button class="btn btn-outline-danger" type="submit">Yes</button>
+							<a class="btn btn-outline-secondary" href="{% url 'post-detail' post.id %}">Cancel</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
