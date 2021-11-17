@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ profile.user.username }}</h5>
                     <p class="card-text">{{ profile.description }}</p>
-                    <button type="button" class="btn btn-success">Message</button>
+                    <p class="card-text">Contact : {{ profile.user.email }} </p>
                     <button type="button" class="btn btn-primary">Commission custom art</button>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 {% for post in posts %}
                 <div class="col mb-3">
                     <div class="card">
-                        <img src="{{ post.image.url }}" class="card-img-top">
+                        <img src="{{ post.preview_image.url }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h5>
                             <p class="card-text">

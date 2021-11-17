@@ -8,20 +8,21 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
-
+from .categories import category_list
 
 def home(request):
     context = {
-        'posts': Post.objects.all()
+        'posts': Post.objects.filter(public=True).order_by('-date_posted'),
+        'tags': category_list
     }
     return render(request, 'blog/home.html', context)
 
-
-class PostListView(ListView):
-    model = Post
-    template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
+def home_filter(request, tagname):
+    context = {
+        'posts': Post.objects.filter(public=True).filter(category=tagname).order_by('-date_posted'),
+        'tags': category_list
+    }
+    return render(request, 'blog/home.html', context)
 
 
 class PostDetailView(DetailView):
@@ -30,7 +31,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'image', 'description', 'price', 'public']
+    fields = ['title', 'description', 'preview_image', 'full_image', 'category', 'price', 'public']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -39,7 +40,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'image', 'description', 'price', 'public']
+    fields = ['title', 'description', 'preview_image', 'full_image', 'category', 'price', 'public']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
