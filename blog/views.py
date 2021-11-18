@@ -17,6 +17,9 @@ def home(request):
     }
     return render(request, 'blog/home.html', context)
 
+def custom_order(request):
+    return render(request, 'blog/custom_order.html')
+
 def home_filter(request, tagname):
     context = {
         'posts': Post.objects.filter(public=True).filter(category=tagname).order_by('-date_posted'),

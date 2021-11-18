@@ -13,7 +13,7 @@
                     <h5 class="card-title">{{ profile.user.username }}</h5>
                     <p class="card-text">{{ profile.description }}</p>
                     <p class="card-text">Contact : {{ profile.user.email }} </p>
-                    <button type="button" class="btn btn-primary">Commission custom art</button>
+                    <a href="{% url 'item-custom' %}" class="btn btn-primary">Commission custom art</a>
                 </div>
             </div>
         </div>
