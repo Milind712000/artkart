@@ -11,7 +11,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">{{ profile.user.username }}</h5>
-                    <p class="card-text">{{ profile.description }}</p>
+                    <pre class="card-text">{{ profile.description }}</pre>
                     <p class="card-text">Contact : {{ profile.user.email }} </p>
                     <a href="{% url 'item-custom' %}" class="btn btn-primary">Commission custom art</a>
                 </div>
