@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mb-3">
+    <div class="card border-dark">
+        <div class="card-header">{{ object.title | capfirst }}</div>
+
+        {% if object.phase_0 %}
+        <div class="card-body">
+            <h2 class="card-title">Order Details</h2>
+            <pre class="card-text" style="border-radius: 10px; padding: 10px; background-color: rgba(128, 128, 128, 0.096);">{{ object.description }}</pre>
+            <p class="text-muted">Last updated {{object.description_update_date | date:"F d, Y"}}</p>
+        </div>
+        {% endif %}
+        
+        
+        {% if object.phase_1 %}
+        <div class="card-body">
+            {% if object.rejected %}
+                <h2 class="card-title">Commission was rejected</h2>
+            {% else %}
+                <h2 class="card-title">Latest Preview</h2>
+                <img class="preview-img mb-3" src="{{ object.image.url }}" style="max-width: 100%; max-height: 500px;">
+                <p class="text-muted">Last updated {{object.image_update_date | date:"F d, Y"}}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="card-body">
+            <h2 class="card-title">Actions</h2>
+            <p class="card-text">Insert form here</p>
+            
+            <!-- 
+                possible actions
+                1. buyer : start (title, description, price) + phase_0 = true
+                2. seller : accept/decline + phase_1 = true/false
+                3. seller : image : upload/update
+                4. buyer : confirm/request changes (description)(skip to step 3)
+                5. phase_2 = true (completion)
+             -->
+
+        </div>
+
+        
+    </div>
+</div>
+{% endblock content %}

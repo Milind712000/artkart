@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
@@ -7,8 +9,18 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post, Purchases
+from .models import Post, Purchases, CustomOrder
 from .categories import category_list
+
+@login_required
+def initiate_custom_order(request, s_id):
+    artist = User.objects.get(id=s_id)
+    corder = CustomOrder(buyer=request.user, seller=artist, title='commission', description='list your requirements here')
+    corder.save()
+    corder.title = 'Commission #'+str(corder.id)
+    corder.save()
+    return redirect(reverse('item-custom', kwargs={'pk':corder.id}))
+
 
 def land_home(request):
     return render(request, 'blog/land-home.html')
@@ -20,8 +32,19 @@ def home(request):
     }
     return render(request, 'blog/art-home.html', context)
 
-def custom_order(request):
-    return render(request, 'blog/custom_order.html')
+@login_required
+def custom_order_list(request):
+    context = {
+        'posts' : CustomOrder.objects.filter(buyer=request.user.id) | CustomOrder.objects.filter(seller=request.user.id)
+    }
+    return render(request, 'blog/custom_order_list.html', context)
+
+@login_required
+def custom_order_item(request, pk):
+    corder = CustomOrder.objects.get(id=pk)
+    if corder.buyer != request.user and corder.seller != request.user:
+        return redirect('blog-home')
+    return render(request, 'blog/custom_order_item.html', {'object' : corder})
 
 def home_filter(request, tagname):
     context = {

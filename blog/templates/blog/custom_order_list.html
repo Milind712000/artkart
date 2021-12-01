@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row py-3">
+        <div class="col" id="main">
+            <div class="row row-cols-3">
+                {% for post in posts %}
+                <div class="col mb-3">
+                    <div class="card border-dark">
+                        <div class="card-header"><a href="{% url 'item-custom' post.id %}">{{ post.title | capfirst }}</a></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                Buyer : <a class="mr-2" href="{% url 'user-profile' post.buyer.id %}">{{ post.buyer.username | capfirst }}</a> <br>
+                                Artist : <a class="mr-2" href="{% url 'user-profile' post.seller.id %}">{{ post.seller.username | capfirst }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
