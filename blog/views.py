@@ -10,6 +10,9 @@ from django.views.generic import (
 from .models import Post, Purchases
 from .categories import category_list
 
+def land_home(request):
+    return render(request, 'blog/land-home.html')
+
 def home(request):
     context = {
         'posts': Post.objects.filter(public=True).order_by('-date_posted'),

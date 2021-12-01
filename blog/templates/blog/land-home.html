@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<div class="p-wrap container-fluid" >
+    <img class="p-img w-100" src="{% static 'blog/bg-splash/bg4.jpeg' %}">
+    <p class="p-content" style="top: 10% !important;">
+        Commission custom artworks <br>
+        From your favourite artists
+    </p>
+</div>
+<div class="p-wrap container-fluid" >
+    <img class="p-img w-100" src="{% static 'blog/bg-splash/bg2.jpeg' %}">
+    <p class="p-content" style="top: 20% !important;">
+        Find artists who match your taste
+    </p>
+</div>
+<div class="p-wrap container-fluid" >
+    <img class="p-img w-100" src="{% static 'blog/bg-splash/bg3.jpeg' %}">
+    <p class="p-content" style="top: 40% !important;">
+        Showcase your work <br>
+        Find people who appreciate your artstyle
+    </p>
+</div>
+{% endblock content %}
