@@ -15,7 +15,7 @@ def home(request):
         'posts': Post.objects.filter(public=True).order_by('-date_posted'),
         'tags': category_list
     }
-    return render(request, 'blog/home.html', context)
+    return render(request, 'blog/art-home.html', context)
 
 def custom_order(request):
     return render(request, 'blog/custom_order.html')
@@ -25,7 +25,7 @@ def home_filter(request, tagname):
         'posts': Post.objects.filter(public=True).filter(category=tagname).order_by('-date_posted'),
         'tags': category_list
     }
-    return render(request, 'blog/home.html', context)
+    return render(request, 'blog/art-home.html', context)
 
 @login_required
 def buy_page(request, pk):
@@ -35,7 +35,7 @@ def buy_page(request, pk):
         seller=post.author,
         title=post.title,
         description=post.description,
-        full_image=post.full_image,
+        image=post.image,
         category=post.category)
         obj.save()
         return redirect('items-bought')
@@ -54,7 +54,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'description', 'preview_image', 'full_image', 'category', 'price', 'public']
+    fields = ['title', 'description', 'image', 'category', 'price', 'public']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -63,7 +63,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'description', 'preview_image', 'full_image', 'category', 'price', 'public']
+    fields = ['title', 'description', 'image', 'category', 'price', 'public']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

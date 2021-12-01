@@ -12,8 +12,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    preview_image = models.ImageField(default='default.jpg', upload_to='art')
-    full_image = models.ImageField(default='default.jpg', upload_to='art')
+    image = models.ImageField(default='default.jpg', upload_to='art')
     
     public = models.BooleanField(default=False)
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
@@ -32,22 +31,5 @@ class Purchases(models.Model):
     
     title = models.CharField(max_length=100)
     description = models.TextField()
-    full_image = models.ImageField(default='default.jpg', upload_to='art')
+    image = models.ImageField(default='default.jpg', upload_to='art')
     category = models.CharField(max_length=20, choices=category_list, default=category_list[-1][0])
-
-# class corder(models.Model):
-#     # init
-#     buyer_id = models.ForeignKey(User)
-#     seller_id = models.ForeignKey(User)
-
-#     # buyer
-#     price = models.DecimalField(max_digits=7, decimal_places=2)
-#     description = models.TextField()
-#     step1 = models.BooleanField(default=False)
-
-#     # seller
-#     preview_img = models.ImageField(default='none.jpg', upload_to='order_imgs')
-#     final_img = models.ImageField(default='none.jpg', upload_to='order_imgs')
-
-#     # buyer
-#     step2 = models.BooleanField(default=False)
