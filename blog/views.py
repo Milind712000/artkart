@@ -11,6 +11,8 @@ from django.views.generic import (
 )
 from .models import Post, Purchases, CustomOrder
 from .categories import category_list
+from .forms import bp_0, bp_2, sp_1, sp_12
+from datetime import datetime
 
 @login_required
 def initiate_custom_order(request, s_id):
@@ -42,8 +44,93 @@ def custom_order_list(request):
 @login_required
 def custom_order_item(request, pk):
     corder = CustomOrder.objects.get(id=pk)
-    if corder.buyer != request.user and corder.seller != request.user:
+
+    if corder.buyer == request.user:
+        if corder.rejected:
+            # order rejected, no more actions
+            pass
+
+        elif corder.phase_2:
+            # order completed, no more actions
+            pass
+
+        elif corder.phase_0 == False:
+            if request.method == 'POST':
+                form = bp_0(request.POST)
+                if form.is_valid():
+                    corder.description = form.cleaned_data['desc']
+                    corder.price = form.cleaned_data['price']
+                    corder.phase_0 = True
+                    corder.description_update_date = datetime.now()
+                    corder.save()
+                    return redirect(reverse('item-custom', kwargs={'pk':corder.id}))
+            else:
+                form = bp_0()
+            return render(request, 'blog/custom_order_item.html', {'object' : corder, 'form' : form})
+        
+        elif corder.phase_2 == False:
+            if request.method == 'POST':
+                form = bp_2(request.POST)
+                if form.is_valid():
+                    if form.cleaned_data['Action'] == 'a':
+                        corder.phase_2 = True
+                        corder.save()
+                        obj = Purchases(buyer=corder.buyer,
+                        seller=corder.seller,
+                        title=corder.title,
+                        description=corder.description,
+                        image=corder.image)
+                        obj.save()
+                        return redirect('items-bought')
+                    else:
+                        corder.description = corder.description + '\n\n' + str('Changes requested on : ' + datetime.now().strftime("%Y-%m-%d %H:%M")) + '\n' + form.cleaned_data['changes']
+                        corder.description_update_date = datetime.now()
+                        corder.save()
+                        return redirect(reverse('item-custom', kwargs={'pk':corder.id}))
+            else:
+                form = bp_2(initial={
+                    'changes' : 'no changes required',
+                    'Action' : 'a'
+                })
+            return render(request, 'blog/custom_order_item.html', {'object' : corder, 'form' : form})
+
+    elif corder.seller == request.user:
+        if corder.rejected:
+            # order rejected, no more actions
+            pass
+
+        elif corder.phase_2:
+            # order completed, no more actions
+            pass
+
+        elif corder.phase_0 == True and corder.phase_1 == False:
+            if request.method == 'POST':
+                form = sp_1(request.POST)
+                if form.is_valid():
+                    corder.phase_1 = True
+                    corder.rejected = form.cleaned_data['Accept'] == 'n'
+                    corder.image_update_date = datetime.now()
+                    corder.save()
+                    return redirect(reverse('item-custom', kwargs={'pk':corder.id}))
+            else:
+                form = sp_1()
+            return render(request, 'blog/custom_order_item.html', {'object' : corder, 'form' : form})
+        
+        elif corder.phase_1 == True:
+            if request.method == 'POST':
+                form = sp_12(request.POST, request.FILES)
+                if form.is_valid():
+                    corder.image = form.cleaned_data['image']
+                    corder.image_update_date = datetime.now()
+                    corder.save()
+                    return redirect(reverse('item-custom', kwargs={'pk':corder.id}))
+            else:
+                form = sp_12()
+            return render(request, 'blog/custom_order_item.html', {'object' : corder, 'form' : form})
+
+    else:
         return redirect('blog-home')
+
     return render(request, 'blog/custom_order_item.html', {'object' : corder})
 
 def home_filter(request, tagname):

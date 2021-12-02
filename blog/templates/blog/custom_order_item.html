@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container mb-3">
     <div class="card border-dark">
@@ -26,9 +27,25 @@
         </div>
         {% endif %}
 
+        {% if form and not object.rejected %}
         <div class="card-body">
             <h2 class="card-title">Actions</h2>
-            <p class="card-text">Insert form here</p>
+            <p class="card-text">
+                <div class="content-section">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            {% if action_name %}
+                            <legend class="border-bottom mb-4">{{ action_name }}</legend>
+                            {% endif %}
+                            {{ form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </p>
             
             <!-- 
                 possible actions
@@ -40,7 +57,7 @@
              -->
 
         </div>
-
+        {% endif %}
         
     </div>
 </div>
