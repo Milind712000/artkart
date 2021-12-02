@@ -7,7 +7,7 @@
             <div class="sticky-top">
                 <h3>Filters</h3>
                 <div class="nav flex-column">
-                    <a href="/" class="nav-link">All</a>
+                    <a href="{% url 'blog-home' %}" class="nav-link">All</a>
                     {% for tag in tags %}
                         <a href="{% url 'blog-home-filter' tag.0 %}" class="nav-link">{{ tag.1 }}</a>
                     {% endfor %}

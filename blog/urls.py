@@ -8,8 +8,8 @@ from .views import (
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='blog-home'),
-    path('home/', views.land_home, name='land-home'),
+    path('art/', views.home, name='blog-home'),
+    path('', views.land_home, name='land-home'),
 
     path('custom/order/', views.custom_order_list, name='list-custom'),
     path('custom/order/<int:pk>/', views.custom_order_item, name='item-custom'),
