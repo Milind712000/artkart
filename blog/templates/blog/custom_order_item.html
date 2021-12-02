@@ -10,6 +10,7 @@
         <div class="card-body">
             <h2 class="card-title">Order Details</h2>
             <pre class="card-text" style="border-radius: 10px; padding: 10px; background-color: rgba(128, 128, 128, 0.096);">{{ object.description }}</pre>
+            <p class="card-text">Price : &#8377; {{ object.price }}</p>
             <p class="text-muted">Last updated {{object.description_update_date | date:"F d, Y"}}</p>
         </div>
         {% endif %}

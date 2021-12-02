@@ -28,8 +28,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="{% url 'land-home' %}">Home</a>
-                <a class="nav-link disabled">Browse</a>
-                <a class="nav-link" href="{% url 'blog-home' %}">Art</a>
+                <a class="nav-link" href="{% url 'blog-home' %}">Browse Art</a>
             </div>
             <div class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
