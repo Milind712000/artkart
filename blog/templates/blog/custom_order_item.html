@@ -27,6 +27,13 @@
         </div>
         {% endif %}
 
+        {% if object.phase_2 %}
+        <div class="card-body">
+                <h2 class="card-title">This custom commission has been completed successfully.</h2>
+                <h2 class="card-title">Please check your purchases page for final image.</h2>
+        </div>
+        {% endif %}
+        
         {% if form and not object.rejected %}
         <div class="card-body">
             <h2 class="card-title">Actions</h2>
@@ -46,16 +53,6 @@
                     </form>
                 </div>
             </p>
-            
-            <!-- 
-                possible actions
-                1. buyer : start (title, description, price) + phase_0 = true
-                2. seller : accept/decline + phase_1 = true/false
-                3. seller : image : upload/update
-                4. buyer : confirm/request changes (description)(skip to step 3)
-                5. phase_2 = true (completion)
-             -->
-
         </div>
         {% endif %}
         
